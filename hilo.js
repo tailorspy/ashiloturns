@@ -111,10 +111,11 @@ function clickInfo2() {
 }
 
 function clickInfo() {
-  var text = new createjs.Text("","20px Arial","#ffffff");
-  text.lineWidth = canvas.width * .80;
-  text.x = canvas.width * .1;
-  text.y = canvas.width * .1;
+  var text = new createjs.Text("","16px Arial","#ffffff");
+  var width = canvas.width / scale;
+  text.lineWidth = width * .80;
+  text.x = width * .1;
+  text.y = width * .1;
   text.text += "Welcome to Hilo Museum!"
   text.text += "\n\n";
   text.text += "Currently, you have finished: " + rooms_cleared + " rooms\n";
