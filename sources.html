@@ -1,0 +1,66 @@
+<html>
+<head>
+<script src="paintings.js"></script>
+<style>
+  img {
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+  }
+</style>
+</head>
+<body>
+<a href="index.html">Back to Game</a><br>
+<a href="info.html">Back to Info</a>
+<hr>
+These are cropped and downsized from public domain images.  I consider these new images to be in public domain same as their origins.
+<hr>
+<div id="mini"></div>
+<hr>
+<div id="list"></div>
+<script>
+  var scale = 8;
+  var width = scale * 74;
+  var height = scale * 106;
+  var div = document.getElementById("list");
+  var mini = document.getElementById("mini");
+
+  var count = 0;
+  paintings.forEach(painting => {
+    count++;
+    var jump = document.createElement("a");
+    jump.href = "#painting" + count;
+
+    var miniImage  = document.createElement("img");
+    miniImage.src = painting.file;
+    jump.append(miniImage);
+
+    mini.append(jump);
+
+    var outerP = document.createElement("p");
+    outerP.id = "painting" + count;
+    var image = document.createElement("img");
+
+    image.src = painting.file;
+    image.width = width;
+    image.height = height;
+    outerP.appendChild(image);
+    outerP.append(document.createElement("br"));
+    outerP.append("artist: ");
+    outerP.append(painting.artist);
+    outerP.append(document.createElement("br"));
+    outerP.append("title: ");
+    outerP.append(painting.title);
+    painting.links.forEach(link => {
+      outerP.append(document.createElement("br"));
+      var a = document.createElement("a");
+      a.href = link;
+      a.append(link);
+      outerP.append(a);
+    });
+    div.append(outerP);
+    div.append(document.createElement("hr"));
+  });
+
+</script>
+</body>
+</html>
