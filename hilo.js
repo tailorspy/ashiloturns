@@ -27,6 +27,8 @@ var imagey = 106;
 var marginx = 84;
 var marginy = 125;
 
+var scale = 1;
+
 function generateAngle() {
   if (.5 > Math.random()) {
     return 7 + 5 * Math.random();
@@ -148,6 +150,10 @@ function addNextButton(x, y) {
   container.y = y;
   container.regX = imagex / 2;
 
+  if (art_crooked == 0) {
+    container.rotation = generateAngle();
+  }
+
   container.addChild(painting, edges, next);
   stage.addChild(container);
 
@@ -163,8 +169,8 @@ function createGallery(firstRun = false, empty = false) {
   stage.removeAllChildren();
   art_crooked = 0;
 
-  var width = canvas.width;
-  var height = canvas.height;
+  var width = canvas.width / scale;
+  var height = canvas.height / scale;
 
   var limity = Math.trunc(height / marginy) - 1;
   var limitx = Math.trunc((width - marginx/2) / marginx) - 1;
@@ -232,6 +238,15 @@ function resize() {
 function init() {
   var canvas = document.getElementById("canvas");
   stage = new createjs.Stage(canvas);
+
+  // Trying to detect mobile devices.
+  if (createjs.Touch.isSupported()) {
+    scale = 2;
+  } else {
+    scale = 1;
+  }
+
+  stage.scale = scale;
 
   preload();
 
