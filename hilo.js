@@ -20,6 +20,8 @@ var borders = [
 var nextButton = "images/next2.png";
 var infoButton = "images/info2.png";
 
+var diveButton = "images/dive.png";
+
 var nextButtonObj;
 
 var imagex = 74;
@@ -163,6 +165,33 @@ function addNextButton(x, y) {
   nextButtonObj = container;
 }
 
+function addDiveButton(x, y) {
+  var container = new createjs.Container();
+
+  var imageNum = Math.floor(Math.random() * paintings.length);
+  var infoObj = preload.getResult(diveButton);
+
+  var paintingObj = preload.getResult(paintings[imageNum].file);
+  var borderObj = preload.getResult(borders[0]);
+  var diveObj = preload.getResult(diveButton);
+  var painting = new createjs.Bitmap(paintingObj);
+  var edges = new createjs.Bitmap(borderObj);
+  var next = new createjs.Bitmap(diveObj);
+
+  container.x = x;
+  container.y = y;
+  container.regX = imagex / 2;
+
+  container.addChild(painting, edges, next);
+  stage.addChild(container);
+
+  container.on("click", function(event) {  window.location.href = "./dive/"; });
+
+  nextButtonObj = container;
+}
+
+
+
 // Create a grid of images to match the screen size.
 // On firstRun, only have image rotated.
 function createGallery(firstRun = false, empty = false) {
@@ -186,7 +215,12 @@ function createGallery(firstRun = false, empty = false) {
       } else if (j == limity - 1 && i == limitx - 1) {
         addNextButton(x, y);
       } else {
-        if (empty) continue;
+        if (empty) {
+          if (j == limity - 1 && i == 1) {
+            addDiveButton(x, y);
+          }
+          continue;
+        }
         if (firstRun) {
           if (i == 1 && j == 1) {
             addPainting(x, y, -1, -1, 1);
@@ -219,6 +253,7 @@ function preload() {
   preload.loadManifest(borders);
   preload.loadFile(nextButton);
   preload.loadFile(infoButton);
+  preload.loadFile(diveButton);
 }
 
 // Resize canvas to match window size.
